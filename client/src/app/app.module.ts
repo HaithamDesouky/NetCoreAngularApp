@@ -27,6 +27,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { LoadingComponent } from './misc-helpers/loading/loading.component';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { LoadingComponent } from './misc-helpers/loading/loading.component';
     MemberCardComponent,
     MemberEditComponent,
     LoadingComponent,
+    PhotoEditorComponent,
   ],
   imports: [
     BrowserModule,
