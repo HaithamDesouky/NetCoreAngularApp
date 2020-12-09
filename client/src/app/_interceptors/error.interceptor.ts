@@ -23,27 +23,23 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error) {
           switch (error.status) {
             case 400:
+              console.log('logging', error);
               if (error.error.errors) {
                 const modalStateErrors = [];
-                for (const key in error.error.errors) {
-                  if (error.error.errors[key]) {
-                    modalStateErrors.push(error.error.errors[key]);
-                  }
-                }
+                // for (const key in error.error.errors) {
+                //   if (error.error.errors[key]) {
+                //     modalStateErrors.push(error.error.errors[key]);
+                //   }
+                // }
 
-                throw modalStateErrors.flat();
+                // throw modalStateErrors.flat();
+                throw error.error;
               } else {
-                this.toastr.error(
-                  error.statusText === 'OK' ? 'Bad Request' : error.statusText,
-                  error.status
-                );
+                this.toastr.error(error.error);
               }
               break;
             case 401:
-              this.toastr.error(
-                error.statusText === 'OK' ? 'Unauthorized' : error.statusText,
-                error.status
-              );
+              console.log(error);
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
@@ -60,7 +56,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
           }
         }
-        return throwError(error);
+        return throwError(error.error);
       })
     );
   }
