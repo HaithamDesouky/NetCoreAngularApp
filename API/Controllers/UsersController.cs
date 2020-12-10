@@ -35,6 +35,9 @@ namespace API.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
     {
+      var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+      userParams.CurrentUserName = user.UserName;
+     
 
       var users = await _userRepository.GetMembersAsync(userParams);
 

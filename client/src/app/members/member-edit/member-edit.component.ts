@@ -42,6 +42,7 @@ export class MemberEditComponent implements OnInit {
     this.memberService
       .getSingleMember(this.user.username)
       .subscribe((member) => {
+        console.log('should be the full user', member);
         this.member = member;
       });
   }
