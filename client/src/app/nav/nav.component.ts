@@ -19,14 +19,11 @@ export class NavComponent implements OnInit {
     private toaster: ToastrService
   ) {}
 
-  ngOnInit(): void {
-    console.log('nav', this.accountService.currentUser$);
-  }
+  ngOnInit(): void {}
 
   login() {
     this.accountService.login(this.model).subscribe(
       (response) => {
-        console.log('logging', response);
         this.router.navigateByUrl('/members');
       },
       (error) => {
