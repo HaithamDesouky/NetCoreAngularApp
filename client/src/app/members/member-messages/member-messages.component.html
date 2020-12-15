@@ -43,15 +43,24 @@
   </div>
 
   <div class="card-footer">
-    <form>
+    <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
       <div class="input-group">
         <input
           type="text"
+          [(ngModel)]="messageContent"
           class="form-control input s-m"
           placeholder="Send a message"
+          name="messageContent"
+          required
         />
         <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">send</button>
+          <button
+            [disabled]="!messageForm.valid"
+            class="btn btn-primary"
+            type="submit"
+          >
+            send
+          </button>
         </div>
       </div>
     </form>

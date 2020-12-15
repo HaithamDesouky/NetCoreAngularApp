@@ -15,7 +15,7 @@ import { Message } from 'src/app/_models/message';
   styleUrls: ['./member-detail.component.scss'],
 })
 export class MemberDetailComponent implements OnInit {
-  @ViewChild('memberTabs') memberTabs: TabsetComponent;
+  @ViewChild('memberTabs', { static: true }) memberTabs: TabsetComponent;
   member: Member;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -29,7 +29,12 @@ export class MemberDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadMember();
+    this.route.data.subscribe((data) => {
+      this.member = data.member;
+    });
+    this.route.queryParams.subscribe((params) =>
+      params.tab ? this.selectTab(params.tab) : this.selectTab(0)
+    );
     this.galleryOptions = [
       {
         width: '500px',
@@ -40,15 +45,8 @@ export class MemberDetailComponent implements OnInit {
         preview: false,
       },
     ];
-  }
 
-  loadMember() {
-    this.memberService
-      .getSingleMember(this.route.snapshot.paramMap.get('username'))
-      .subscribe((member) => {
-        this.member = member;
-        this.galleryImages = this.getImages();
-      });
+    this.galleryImages = this.getImages();
   }
 
   getImages(): NgxGalleryImage[] {
@@ -69,6 +67,10 @@ export class MemberDetailComponent implements OnInit {
       .subscribe((messages) => {
         this.messages = messages;
       });
+  }
+
+  selectTab(tabID: number) {
+    this.memberTabs.tabs[tabID].active = true;
   }
 
   onTabActivated(data: TabDirective) {
